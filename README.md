@@ -1,7 +1,11 @@
 # videolectures-dl
 
+[(This is the source code branch, if you are looking for a compiled windows binary, click here.)][1]
+
 A small command-line program to download videos from videolectures.net.
 This program works under both python2 and python3.
+
+  [1]: https://github.com/smly/videolectures-dl/tree/binary "videolectures-dl @ GitHub"
 
 ## Usage
 
