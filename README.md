@@ -5,7 +5,13 @@
 A small command-line program to download videos from videolectures.net.
 This program works under both python2 and python3.
 
+## Requirements
+
+* [(rtmpdump)][2]
+* python2 or python3
+
   [1]: https://github.com/smly/videolectures-dl/tree/binary "videolectures-dl @ GitHub"
+  [2]: http://rtmpdump.mplayerhq.hu/ "RTMPDump"
 
 ## Usage
 
@@ -23,8 +29,3 @@ This program works under both python2 and python3.
 * error handling
 * try resuming
 * messy code
-
-## Requirements
-
-* rtmpdump
-* python2 or python3
