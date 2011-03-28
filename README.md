@@ -7,7 +7,7 @@ This program works under both python2 and python3.
 
 ## Requirements
 
-* [(rtmpdump)][2]
+* [rtmpdump][2]
 * python2 or python3
 
   [1]: https://github.com/smly/videolectures-dl/tree/binary "videolectures-dl @ GitHub"
