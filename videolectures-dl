@@ -89,12 +89,12 @@ class VideoDownloader:
 
     def ie_error(self, mesg=None):
         if mesg is not None:
-            to_stderr(mesg)
+            self.to_stderr(mesg)
         raise ExtractionError(mesg)
 
     def error(self, mesg=None):
         if mesg is not None:
-            to_stderr(mesg)
+            self.to_stderr(mesg)
         raise Exception(mesg)
 
     def report(self, mesg):
