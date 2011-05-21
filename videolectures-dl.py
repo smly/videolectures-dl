@@ -52,6 +52,16 @@ class VideoInfoExtractor:
             self._server = flashvars.group(1)
             self._filepath = flashvars.group(2)
 
+    def extract_flashinfo(self, body):
+        matches = re.search("\sclip\.url = \"(.+)\";", body)
+        if matches is None:
+            self._extracted = False
+        else:
+            self._extracted = True
+            self._server    = "rtmp://oxy.videolectures.net/video/"
+            self._filepath  = matches.group(1)
+        return self._filepath
+
     def get_info(self, url):
         try:
             from urllib import request as urllib_request
@@ -63,7 +73,7 @@ class VideoInfoExtractor:
             return False
         conn = urllib_request.urlopen(url)
         self._body = conn.read().decode('utf8')
-        self.extract_flashvars(self._body)
+        self.extract_flashinfo(self._body)
         self.extract_filename(self._body)
         self.report_video_title(self._meta_title_name)
         return self._extracted
@@ -115,6 +125,7 @@ class VideoDownloader:
 
         basic_args = ['rtmpdump', '-q', '-r', server, '-y', url, '-a', 'video'] + \
             ['-s', self.PLAYER_URL, '-w', self.PLAYER_CHECKSUM, '-o', filename]
+        print basic_args
         retval = subprocess.Popen(basic_args)
         while True:
             if retval.poll() != None: break
@@ -149,8 +160,25 @@ def main(opts, url):
     sys.exit(0)
 
 def test_extraction():
-    a = 2
-    assert a == 2, "assert 2 is 4"
+    # todo: refactoring. so messy...
+    try:
+        from urllib import request as urllib_request
+    except ImportError:
+        import urllib as urllib_request
+        pass
+
+    ie       = VideoInfoExtractor()
+    url      = "http://videolectures.net/bootcamp2010_murray_iml/"
+    clip_url = "v001/f7/67excmhkmlpa2xfazto6udg2tcx5p47u"
+    basename = "bootcamp2010_murray_iml"
+    assert ie.valid_url(url) == True
+
+    conn = urllib_request.urlopen(url)
+    body = conn.read().decode('utf8')
+    assert ie.extract_flashinfo(body) == clip_url
+
+    ie.extract_filename(body)
+    assert ie._meta_url_name == basename
 
 if __name__ == '__main__':
     import optparse
