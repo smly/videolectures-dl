@@ -9,12 +9,19 @@
 import re, os, sys
 import subprocess, time
 
+class ExtractionError(Exception):
+    pass
+
 class VideoInfoExtractor:
     _VALIDATE_URL    = r'^http://videolectures.net'
-    _VIDEO_PAGE      = r'var flashvars = {\s+?streamer:\s"(rtmp://[^"]+)",\s+?file:\s"([^\.]+)\.\w+?"'
+# obsolated
+#    _VIDEO_PAGE      = r'var flashvars = {\s+?streamer:\s"(rtmp://[^"]+)",\s+?file:\s"([^\.]+)\.\w+?"'
+    _GOOGLE_VIDEO    = r'http://video\.google\.com/googleplayer\.swf\?docId'
     _META_TITLE_NAME = r'<meta name="title" content="\s*([^"]*?)\s*" />'
     _META_URL_NAME   = r'<link rel="image_src" href="/?([^\/]+)/thumb.jpg" />'
     _ORIG_FILENAME   = r'([^\/]+)$'
+
+
 
     def __init__(self):
         self._body            = ''
@@ -28,6 +35,14 @@ class VideoInfoExtractor:
     @staticmethod
     def valid_url(url):
         return (re.match(VideoInfoExtractor._VALIDATE_URL, url) is not None)
+
+    def to_stderr(self, mesg):
+        print >>sys.stderr, mesg
+
+    def ie_error(self, mesg=None):
+        if mesg is not None:
+            self.to_stderr(mesg)
+            raise ExtractionError(mesg)
 
     def report_video_title(self, title):
         print("[download] Title: %s" % title)
@@ -43,6 +58,7 @@ class VideoInfoExtractor:
         if metaname is not None:
             self._base_filename = metaname.group(1)
 
+    # obsolated
     def extract_flashvars(self, body):
         flashvars = re.search(VideoInfoExtractor._VIDEO_PAGE, body)
         if flashvars is None:
@@ -54,6 +70,10 @@ class VideoInfoExtractor:
 
     def extract_flashinfo(self, body):
         matches = re.search("\sclip\.url = \"(.+)\";", body)
+        check_gvideo = re.search(VideoInfoExtractor._GOOGLE_VIDEO, body)
+        if check_gvideo is not None:
+            self.ie_error("ERROR: google video not supported")
+
         if matches is None:
             self._extracted = False
         else:
@@ -72,14 +92,16 @@ class VideoInfoExtractor:
         if not self.valid_url(url):
             return False
         conn = urllib_request.urlopen(url)
+
         self._body = conn.read().decode('utf8')
         self.extract_flashinfo(self._body)
         self.extract_filename(self._body)
         self.report_video_title(self._meta_title_name)
+
         return self._extracted
 
-class DownloadError(Exception): pass
-class ExtractionError(Exception): pass
+class DownloadError(Exception):
+    pass
 
 class VideoDownloader:
     PLAYER_URL      = 'http://media.videolectures.net/jw-player/player.swf'
