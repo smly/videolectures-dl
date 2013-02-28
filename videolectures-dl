@@ -9,6 +9,11 @@
 import re, os, sys
 import subprocess, time
 
+if sys.version_info[0] == 3:
+    from urllib import request as urllib_request
+else:
+    import urllib as urllib_request
+
 class ExtractionError(Exception):
     pass
 
@@ -83,12 +88,6 @@ class VideoInfoExtractor:
         return self._filepath
 
     def get_info(self, url):
-        try:
-            from urllib import request as urllib_request
-        except ImportError:
-            import urllib as urllib_request
-            pass
-
         if not self.valid_url(url):
             return False
         conn = urllib_request.urlopen(url)
@@ -182,13 +181,6 @@ def main(opts, url):
     sys.exit(0)
 
 def test_extraction():
-    # todo: refactoring. so messy...
-    try:
-        from urllib import request as urllib_request
-    except ImportError:
-        import urllib as urllib_request
-        pass
-
     ie       = VideoInfoExtractor()
     url      = "http://videolectures.net/bootcamp2010_murray_iml/"
     clip_url = "v001/f7/67excmhkmlpa2xfazto6udg2tcx5p47u"
