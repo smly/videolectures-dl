@@ -161,29 +161,44 @@ class VideoDownloader:
         if self.download_with_rtmp(filename, self.ie._server, self.ie._filepath):
             self.report("download complete")
 
-def main(opts, url):
-    dl = VideoDownloader(opts)
-    dl.get_video(url)
+def get_args():
+    import argparse
+
+    version = '2013.03.07'
+
+    parser = argparse.ArgumentParser(
+        description='A command-line program to download videos from videolectures.net',
+        prog='videolectures-dl',
+        conflict_handler='resolve')
+    parser.add_argument(
+        '-h', '--help', action='help',
+        help='print this help text and exit')
+    parser.add_argument(
+        '-v', '--version', action='version',
+        version=version,
+        help='print program version and exit')
+    parser.add_argument(
+        '-w', '--overwrite', action='store_true', dest='overwrite',
+        help='overwrite an existent file')
+    parser.add_argument(
+        '-t', '--title', action='store_true', dest='usetitle',
+        help='use title in filename')
+    parser.add_argument(
+        '-l', '--literal', action='store_true', dest='useliteral',
+        help='use literal title in filename')
+    parser.add_argument('video_url', help='url of video page')
+
+    args = parser.parse_args()
+    if not len(args.video_url) > len("videolectures.net"):
+        parser.print_help()
+        sys.exit(1)
+
+    return args
+
+def main(args):
+    dl = VideoDownloader(args)
+    dl.get_video(args.video_url)
     sys.exit(0)
 
 if __name__ == '__main__':
-    import optparse
-    usage = 'usage: %prog [options] video_url'
-    version = '2011.03.30'
-    optparser = optparse.OptionParser(usage=usage, version=version, conflict_handler='resolve')
-    optparser.add_option('-h', '--help', action='help',
-                         help='print this help text and exit')
-    optparser.add_option('-v', '--version', action='version',
-                         help='print program version and exit')
-    optparser.add_option('-w', '--overwrite', action='store_true', dest='overwrite',
-                         help='overwrite an existent file')
-    optparser.add_option('-t', '--title', action='store_true', dest='usetitle',
-                         help='use title in filename')
-    optparser.add_option('-l', '--literal', action='store_true', dest='useliteral',
-                         help='use literal title in filename')
-    (opts, args) = optparser.parse_args()
-
-    if not len(args) > 0:
-        optparser.print_help()
-        sys.exit(1)
-    main(opts, args[0])
+    main(get_args())
