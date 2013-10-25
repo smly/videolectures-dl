@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Modeling Social and Information Networks: Opportunities for Machine Learning - VideoLectures.NET</title>
+    <!-- <base href="http://videolectures.net/"> !-->
+    <script>
+      var viipg = {
+        cfg:{ slug:'icml09_leskovec_msain',type:'Lecture',obj_id:9524,
+          video:1,video_id:9720,videos:1,syncs:147,
+          
+          
+          chrome_colors: ["FFFFFF","F21F1F"],
+          
+          livepipe: '//videolectures.net',
+          site_slug: 'vln',
+          media_url:'http://media.videolectures.net/rel.1382446514/'
+        },
+        xhr: (function(url) {var xhr=new XMLHttpRequest(); xhr.open("GET",url,true); xhr.send(); xhr.url=url; return xhr;})('/icml09_leskovec_msain/video/1/smil.xml'),
+        ready: function() {var r=function(fn) {r._todo.push(fn);}; r._todo=[]; return r;}(),
+        load: function() {var r=function(fn) {r._todo.push(fn);}; r._todo=[]; return r;}(),
+        ga: function() {var r=function(fn) {r._todo.push(Array.prototype.slice.apply(arguments));}; r._todo=[]; return r;}()
+      };
+    </script>
+
+    
+    
+  <link rel="stylesheet" href="http://media.videolectures.net/rel.1382446514//common/css/styles.css" type="text/css" media="screen" />
+  <!--<link rel="stylesheet" href="http://media.videolectures.net/rel.1382446514//base.css" type="text/css">-->
+  <LINK rel="stylesheet" href="http://media.videolectures.net/rel.1382446514//custom/projects/pascal/style.css" type="text/css">
+  <link rel="stylesheet" href="http://media.videolectures.net/rel.1382446514//custom/vln.css" type="text/css">
+    <style type="text/css"> a[lang="en"] img.lang-flag{display:none;}</style>    
+<link rel="stylesheet" type="text/css" href="http://media.videolectures.net/rel.1382446514//rating.css">
+<link rel="stylesheet" type="text/css" href="http://media.videolectures.net/rel.1382446514/static/smileplayer/gui/controls.css"/>
+
+    
+    
+
+    
+    
+    
+      
+<script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
+<script>
+  Raven.config('//161ef9a5c3a14af1848399909b890522@sentry.viidea.com/6', (window.viipg && window.viipg.raven_options) || {}).install();
+</script>
+
+    
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script type="text/javascript" src="http://media.videolectures.net/rel.1382446514//jquery.rating.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514//common/js/LAB.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514//chrome/js/underscore.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514//chrome/js/json2.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514//chrome/js/backbone-min.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514//chrome/js/script.js"></script>
+  <script src="/site/manage/i18n/"></script>
+  <script src="http://media.videolectures.net/rel.1382446514/static/smileplayer/smileplayer.min.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514/static/vl/js/script-player.js"></script>
+  <script src="http://media.videolectures.net/rel.1382446514/static/vl/js/script-player-vln.js"></script>
+
+    
+    
+    
+    
+  <link rel="shortcut icon" HREF="http://media.videolectures.net/rel.1382446514//custom/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" href="http://media.videolectures.net/rel.1382446514//custom/vln-touch-icon-precomposed.png">
+
+    
+<meta name="title" content="Modeling Social and Information Networks: Opportunities for Machine Learning - VideoLectures.NET" />
+<meta name="description" content="Emergence of the web, social media and online social networking websites gave rise to detailed traces of human social activity. This offers many opportunities to analyze and model behaviors of millions of people. For example, we can now study ''planetary scale'' dynamics of a full Microsoft Instant Messenger network of 240 million people, with more than 255 billion exchanged messages per month.  Many types of data, especially web and &quot;social&quot; data, come in a form of a network or a graph. This tutorial will cover several aspects of such network data: macroscopic properties of network data sets; statistical models for modeling large scale network structure of static and dynamic networks; properties and models of network structure and evolution at the level of groups of nodes and algorithms for extracting such structures. I will also present several applications and case studies of blogs, instant messaging, Wikipedia and web search.  Machine learning as a topic will be present throughout the tutorial. The idea of the tutorial is to introduce the machine learning community to recent developments in the area of social and information networks that underpin the Web and other on-line media." />
+
+
+  <link rel="image_src" href="http://hydro.ijs.si/v005/19/dgqtpq7tlvahuqcpxtaqzwd3wfcf433z.jpg" />
+  <meta property="og:image" content="http://hydro.ijs.si/v005/19/dgqtpq7tlvahuqcpxtaqzwd3wfcf433z.jpg" /> 
+
+
+
+<link rel="alternate" href="http://videolectures.net/icml09_leskovec_msain/video/1/oembed.json" type="application/json+oembed" />
+<link rel="alternate" href="http://videolectures.net/icml09_leskovec_msain/video/1/oembed.xml" type="application/xml+oembed" />
+<link rel="canonical" href="http://videolectures.net/icml09_leskovec_msain/" type="text/html" />
+
+<meta name="description" content="Emergence of the web, social media and online social networking websites gave rise to detailed traces of human social activity. This offers many opportunities to analyze and model behaviors of millions of people. For example, we can now study ''planetary scale'' dynamics of a full Microsoft Instant Messenger network of 240 million people, with more than 255 billion exchanged messages per month.  Many types of data, especially web and &quot;social&quot; data, come in a form of a network or a graph. This tutorial will cover several aspects of such network data: macroscopic properties of network data sets; statistical models for modeling large scale network structure of static and dynamic networks; properties and models of network structure and evolution at the level of groups of nodes and algorithms for extracting such structures. I will also present several applications and case studies of blogs, instant messaging, Wikipedia and web search.  Machine learning as a topic will be present throughout the tutorial. The idea of the tutorial is to introduce the machine learning community to recent developments in the area of social and information networks that underpin the Web and other on-line media." />
+<meta property="og:type" content="movie">
+<meta property="og:url" content="http://videolectures.net/icml09_leskovec_msain/">
+<meta property="og:title" content="Modeling Social and Information Networks: Opportunities for Machine Learning" /> 
+<meta property="og:description" content="Emergence of the web, social media and online social networking websites gave rise to detailed traces of human social activity. This offers many opportunities to analyze and model behaviors of millions of people. For example, we can now study ''planetary scale'' dynamics of a full Microsoft Instant Messenger network of 240 million people, with more than 255 billion exchanged messages per month.  Many types of data, especially web and &quot;social&quot; data, come in a form of a network or a graph. This tutorial will cover several aspects of such network data: macroscopic properties of network data sets; statistical models for modeling large scale network structure of static and dynamic networks; properties and models of network structure and evolution at the level of groups of nodes and algorithms for extracting such structures. I will also present several applications and case studies of blogs, instant messaging, Wikipedia and web search.  Machine learning as a topic will be present throughout the tutorial. The idea of the tutorial is to introduce the machine learning community to recent developments in the area of social and information networks that underpin the Web and other on-line media." /> 
+
+
+    
+        
+    
+</head>
+
+<body id='lecture_page' >
+
+
+  <div id="page_header_bg" class="pg_block">
+  <div id="header">
+    <div id='branding'>
+      
+    <a href="/"><div id='site_logo'></div></a>
+    <div id="wsa_logo"></div>
+    <a href="http://www.wsis-award.org/"><div id='wsis_logo'></div></a>
+
+    </div>      
+    <div id='user-tools'>
+      
+      <span id="jq_userctl">
+          
+        <span class='login-logout'>
+        <a href="/site/accounts/login/?next=/icml09_leskovec_msain/" rel='nofollow'>Log in</a>  |
+        <a href="/site/accounts/register/" rel='nofollow'>Register</a> |
+        </span>
+        
+        
+          <a href="/" rel='nofollow' id="lang_sel" title='Choose your language'>
+          
+            <img src='http://media.videolectures.net/rel.1382446514//flags/us.gif' alt='English language'><img src='http://media.videolectures.net/rel.1382446514//flags/uk.gif' border='0' alt=''>
+          
+          </a>
+          &nbsp;
+        
+      </span>
+      
+  
+  <div id="signInRegister">
+  
+    <div id="register"><a href="/site/accounts/register/" rel='nofollow'>New User<br>Register</a></div>
+    <div id="signIn"><a href="/site/accounts/login/?next=/icml09_leskovec_msain/" rel='nofollow'>Sign in</a></div>
+  
+  </div>
+
+      
+    </div>
+    <div style='clear:both;'></div>
+  </div>
+  </div>
+
+  
+  <div id='top_menu_box' class='pg_block'>
+  <div id='top_menu'>
+    <form method='get' action="/site/search/">
+      <input class="search" name="q" type="text" value="" size='40'><input class="button" type="submit" value='Search'>
+    </form>
+    
+      
+    
+    <ul>
+      
+  <li id='tm_home' class='tm_leftmost'><a href="/">Home</a></li>
+  <li id='tm_browse'><a href="/Top/" class="dd_href">Browse Lectures</a></li>
+  <li id='tm_authors'><a href="/site/list/authors/">People</a></li>
+  <li id='tm_conferences'><a href="/conferences/">Conferences</a></li>
+  <li id='tm_academia'><a href="/academia/">Academic Organisations</a></li>
+  <li id='tm_eu_supported'><a href="/eu_supported/">EU Supported</a></li>
+  <li id='tm_blog'><a href="http://blog.videolectures.net/">Blog</a></li>
+  <li id='tm_about'><a href="/site/about/">About Us</a></li>
+
+    </ul>
+    <div style='clear:both;'></div>
+  </div>
+  </div>
+  
+
+
+  
+  
+  <div style='clear:both;'></div>
+  
+  <div class='drilldown_hmenu_bg pg_block'>
+  <div class='drilldown_hmenu'>
+  <div class='drilldown dd_bg' style='margin-right:0px;'>
+    <span class='drilldown_loc'>
+    
+      <span class='drilldown_hmenu_label'>Location:</span>
+      
+        
+          <a href='/eu_supported/'>EU Supported</a>
+        
+        &raquo;
+      
+        
+          <a href='/pascal/'>PASCAL - Pattern Analysis, Statistical Modelling and Computational Learning</a>
+        
+        &raquo;
+      
+        
+          <a href='/icml09_montreal/'>26th International Conference on Machine Learning (ICML), Montreal 2009</a>
+        
+        &raquo;
+      
+        
+          <a href='/icml09_tutorials/'>Tutorials</a>
+        
+        
+        
+      <br>
+    
+    </span>
+  </div>
+  </div>
+  </div>
+
+  
+  	
+
+  <div id="maincontainer" class="pg_block">
+    
+    
+	
+
+
+    <script type="text/javascript">$('#tm_browse').addClass('current');</script>
+   
+    
+      
+      <div id="content" class="content">
+        
+
+      
+
+<div id='drilldown_counts'></div>
+<div id="innerbox"><div id="drilldown_list" >
+  
+  
+  
+    <span id='vl_desc'>
+    
+      
+      
+      <div id='vl_event_thumb'>
+      <a href='/icml09_tutorials/' OnClick="document.location.href='/icml09_tutorials/';">
+		
+		  
+			<div class='img_shadow'>
+			  <img src="http://hydro.ijs.si/v00c/6b/nn3lna5xn34jptt64yvxtl67fmjvvckr.jpg" style='border:1px solid #ccc; padding:0px;' alt='event thumbnail image'>
+			</div>
+			<span style='clear:right;'>
+		  
+		
+        Tutorials
+        </span>
+      </a>
+      </div>
+      
+    
+
+    <h2>Modeling Social and Information Networks: Opportunities for Machine Learning</h2>
+    <div class='lec_data'>
+    
+        <span>author: </span><a href='/jure_leskovec/'>Jure Leskovec</a>, 
+            Computer Science Department, Stanford University
+      <br>
+    
+
+    
+      <span>published:</span> Aug. 26, 2009, &nbsp; 
+      
+        <span>recorded:</span> June 2009, &nbsp; 
+        <span>views:</span> 3177<br />
+      
+    
+    
+
+    </div>
+
+    
+    
+    
+    
+    
+    
+
+
+  <fieldset id='categories'>
+  <legend>
+    Categories
+    
+  </legend>
+  <ul>
+  
+    <li>
+    <span clase='cat_path'><a href='/Top/'>Top</a>
+     &raquo; 
+    <a href='/Top/Computer_Science/'>Computer&nbsp;Science</a>
+     &raquo; 
+    <a href='/Top/Computer_Science/Network_Analysis/'>Network&nbsp;Analysis</a>
+     &raquo; 
+    <a href='/Top/Computer_Science/Network_Analysis/Social_Networks/'>Social&nbsp;Networks</a></span></li>
+  
+  </ul>
+  </fieldset>
+
+
+
+    
+    </span>
+  
+  
+ 
+
+
+
+  <div style='clear:both;'></div>
+  <span id="video_player_ajax" >
+  
+    
+
+
+
+   
+
+<div id='player_ctl_top'>
+  <div class='cinema_bg'><a class="cinema_switch" href="#">Switch off the lights</a></div>
+</div>
+<div id='video_player'  class='synchronized'>
+  <div id='video_border'  class='cinema_always_lit v_video'>
+	
+      <div id="player-container">
+        <div id='video_player_border'>
+          <div id='video_player_embed'></div>
+        </div>
+      </div>
+      <script>viipg.initialize_player();</script>
+  
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $("#cinema_shadow").css("height", $(document).height()).hide();
+      $(".cinema_switch").click(function(){
+        $("#cinema_shadow").css("height", $(document).height()).toggle();
+        if ($("#cinema_shadow").is(":hidden")) {
+          $(this).html("Switch off the lights").removeClass("cinema_turned_off");
+        } else {
+          $(this).html("Switch on the lights").addClass("cinema_turned_off");
+        } 
+        return false;
+      });
+    });
+  </script>
+  
+  <div id='player_ctl_bottom'>
+  
+  </div>
+</div>
+
+
+
+  
+  </span>
+
+  <div class='lec_rbox'>
+    <div id='video_rbox'>
+<span id='video_rbox_top'>
+
+
+  
+<div id="syncs" class='mod_body'>
+  <h1 class='syncs_title'>Slides</h1>
+  <div>
+    <table id='sync_list'>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+
+</span>
+
+
+
+
+
+
+  <div class='mod_body' id='vl_hints'>
+    <h1>Related content</h1>
+    
+<div id='hintdiv'>
+
+  <script>
+    $(window).load(function() {
+      $('#hintdiv').load('hints/rel/');
+    }); 
+  </script>
+    
+</div>
+
+
+
+  </div>
+
+
+
+
+
+  <div class='mod_body' id='vl_tickets'>
+    <h1>Report a problem or upload files</h1>
+    
+    <small> 
+If you have found a problem with this lecture or would like to send us extra material, articles, exercises, etc., please use our <b><u><a href='/trac/newticket?summary=icml09_leskovec_msain:%20&amp;milestone=Lectures&amp;description=%0adescribe%20your%20request%20here...%0a%0a%0a%0a%0a%0a%0a%0aWiki%20link%20back%20to%20lecture:%20[/icml09_leskovec_msain/%20/icml09_leskovec_msain/]' rel='nofollow'>ticket system</a></u></b> to describe your request and upload the data.
+<br><i>Enter your e-mail into the 'Cc' field, and we will keep you updated with your request's status.</i>
+    </small>
+  </div>
+
+</div>
+  </div>
+
+  <div class='lec_lbox'>
+    <div id='player_notice'></div>
+    <div id='video_lbox'>
+      
+
+
+<div id='votes'>
+  
+
+<span>Lecture popularity:</span>
+<span class="rating" title="" action="/icml09_leskovec_msain/votes/?g=" enabled='False' value="05.0"></span>
+<span></span>
+<span>
+
+    You need to <a href='/site/accounts/login/?next=/icml09_leskovec_msain/' rel='nofollow'>login</a> to cast your vote.
+  
+</span>
+
+
+<div style='clear:both; padding:0 10px 0 10px'>
+
+<script type='text/template' id='share-buttons-html'>
+
+
+<style type="text/css">
+  .twitter-share-button {
+    width: 80px !important;
+    margin-bottom: 1px;
+  }
+
+  #___plusone_0 {
+    width: 60px !important;
+  }
+</style>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="videolectures" data-related="videolectures" style="width: 90px;">Tweet</a>
+
+&nbsp;
+
+
+<iframe 
+  src="http://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fvideolectures.net/icml09_leskovec_msain/&amp;layout=button_count&amp;show_faces=true&amp;width=90&amp;action=like&amp;colorscheme=light&amp;height=80" 
+  scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"
+>
+</iframe>
+
+
+<g:plusone size="medium"></g:plusone>
+
+
+<div style="height: 20px; padding-top: 4px; overflow:hidden; display:inline-block;">
+
+  &nbsp;
+  
+  
+  <script type="IN/Share" data-counter="right"></script>
+
+  &nbsp;
+  
+  <a href="http://www.delicious.com/save" title="Add to Delicious" onclick="window.open('http://www.delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;" style="display: inline-block; vertical-align: top; padding-top: 2px; padding-right: 5px;">
+    
+    <img src="http://delicious.com/img/logo.png" height="16" width="16" alt="Delicious" />
+  </a>
+  
+  <a href="http://www.mendeley.com/import/?url=http%3A%2F%2Fvideolectures.net/icml09_leskovec_msain/" title="Add to Mendeley" target="_new" style="display: inline-block; vertical-align: top; padding-top: 2px;">
+    <img src="http://media.videolectures.net/rel.1382446514//custom/icon_mendeley_16x16.gif" alt="Bibliography">
+  </a>
+
+</div>
+
+</script> 
+
+<script type="text/javascript">
+  $(window).load( function() {
+    // display rating stars
+    $('span.rating').rating();
+
+    window.setTimeout(function() {
+      // render the template
+      var tpl = $('#share-buttons-html');
+      tpl.after(tpl.html());
+      tpl.empty();
+      // twitter
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id; 
+      js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      // google plus
+      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+      po.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      // linked-in
+      $.getScript('http://platform.linkedin.com/in.js');
+    }, 200);
+  });
+</script>
+
+</div>
+
+<div style='clear:both'></div>
+
+
+</div>
+
+
+  
+
+
+
+
+
+
+
+  <div class='mod_body justified' id='description'>
+  <h1>Description</h1>
+  
+
+
+  <div class='wiki' id="lec_desc_edit">
+  <p>Emergence of the web, social media and online social networking websites gave rise to detailed traces of human social activity. This offers many opportunities to analyze and model behaviors of millions of people. For example, we can now study ''planetary scale'' dynamics of a full Microsoft Instant Messenger network of 240 million people, with more than 255 billion exchanged messages per month. 
+Many types of data, especially web and "social" data, come in a form of a network or a graph. This tutorial will cover several aspects of such network data: macroscopic properties of network data sets; statistical models for modeling large scale network structure of static and dynamic networks; properties and models of network structure and evolution at the level of groups of nodes and algorithms for extracting such structures. I will also present several applications and case studies of blogs, instant messaging, Wikipedia and web search. 
+Machine learning as a topic will be present throughout the tutorial. The idea of the tutorial is to introduce the machine learning community to recent developments in the area of social and information networks that underpin the Web and other on-line media.</p>
+
+  
+  <div class='height5' style='clear:both;'></div>
+  </div>
+  
+
+
+
+  </div>
+
+
+
+  
+
+  <div class='mod_body' id='vl_seealso'>
+    <h1>See Also:</h1>
+
+	
+	  
+	
+	  
+	
+	  
+	
+	  <p><img alt="Download slides icon" src="http://media.videolectures.net/rel.1382446514//icons/powerpoint.png" />
+        Download slides: 
+        <a href="/site/normal_dl/tag=48003/icml09_leskovec_msain_01.pdf" rel='nofollow'>icml09_leskovec_msain_01.pdf</a>&nbsp;<small>(17.7 MB)</small></p>
+	
+	  
+	
+	  
+	
+	  
+	
+       
+    
+    
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+    
+    
+    
+    
+  <hr />
+  <p>
+    <img alt="Help icon" src="http://media.videolectures.net/rel.1382446514//icons/help.png" />
+    <a href='/site/help/'>Streaming Video Help</a>
+  </p>
+  <p>
+    <img alt="WebLink icon" src="http://media.videolectures.net/rel.1382446514//icons/link.png" />
+    <a href='http://port25.technet.com/pages/windows-media-player-firefox-plugin-download.aspx' rel='nofollow'>Windows Media Player Firefox Plugin - Download</a>
+  </p>
+
+  </div>
+
+
+
+
+<div class="mod_body" id='vl_addthis'>
+<h1>Link this page</h1>
+<p/>
+Would you like to put a link to this lecture on your homepage?<br />
+Go ahead! Copy the <a href='snippet/' rel='nofollow'>HTML snippet </a>!
+</div>
+
+<div id='comments'>
+  
+
+
+
+
+  
+  <!--
+    <b>Added on </b> 
+    <a href="/icml09_leskovec_msain/#comments"> Comment</a>
+  -->  
+  
+  
+  <div class='mod_body'>
+    <h1>Write your own review or comment:</h1>
+    
+      
+  
+  <form action="/site/comments/post/" method="post" class='comment_form'><input type='hidden' name='csrfmiddlewaretoken' value='yr0dtZC9b4YMtBAA4BqTWGaQ5YecLGde' />
+    
+      
+    
+
+    <table>
+    
+      
+        <input id="id_content_type" name="content_type" type="hidden" value="vl.lecture" />
+      
+    
+      
+        <input id="id_object_pk" name="object_pk" type="hidden" value="9524" />
+      
+    
+      
+        <input id="id_timestamp" name="timestamp" type="hidden" value="1382831511" />
+      
+    
+      
+        <input id="id_security_hash" name="security_hash" type="hidden" value="e66558e2e214218d833c29d72e99063d5683aad8" />
+      
+    
+      
+      
+        <tr >
+        <th ><label for="id_name">Name</label></th>
+        
+          <td width='100%'>
+        
+        <input id="id_name" maxlength="50" name="name" type="text" />
+        
+        </td></tr>
+      
+      
+    
+      
+      
+        <tr >
+        <th ><label for="id_email">Email address</label></th>
+        
+          <td width='100%'>
+        
+        <input id="id_email" name="email" type="text" />
+        
+        </td></tr>
+      
+      
+    
+      
+      
+        <tr >
+        <th ><label for="id_url">URL</label></th>
+        
+          <td width='100%'>
+        
+        <input id="id_url" name="url" type="text" />
+        
+        </td></tr>
+      
+      
+    
+      
+      
+        <tr >
+        <th ><label for="id_comment">Comment</label></th>
+        
+          </tr><td colspan='2'>
+        
+        <textarea cols="40" id="id_comment" name="comment" rows="10">
+</textarea>
+        
+        </td></tr>
+      
+      
+    
+      
+      
+        <tr style='display:none;'><td>make sure you have javascript enabled or clear this field:</td><td><input name="honeypot" id="honeypot" value="/site/comments/post/"></td><tr>
+      
+      
+    
+    </table>
+    <script type="text/javascript" defer="DEFER">$(document).ready(function() {$('#hon'+'eypot').val('');});</script>
+
+    <p class="submit">
+    
+    <input type="submit" name="preview" class="submit-preview" value="Preview" />
+    </p>
+  </form>
+
+  </div>
+
+</div>
+
+
+
+
+    </div>
+  </div>
+
+ 
+
+
+</div></div>
+
+
+
+      <div style='clear:both;'></div>
+      </div>
+    
+  
+    
+  </div> 
+
+
+
+  
+  <div id="footer">
+    <div id='ftr' class='pg_block'>
+    
+      
+        
+          <div class="footer_wiki"><div class='wrapped_block'><h2>KERNEL METHODS</h2>
+<p><a href="http://videolectures.net/roks2013_leuven/">Advances in Regularization, Optimization, Kernel Methods and Support Vector Machines</a></p>
+</div><div class='wrapped_block'><h2>LEARNING THEORY</h2>
+<p><a href="http://videolectures.net/colt2013_princeton/">Theoretical aspects of machine learning and related topic</a></p>
+</div><div class='wrapped_block'><h2>BEST INVITED TALK</h2>
+<p><a href="http://videolectures.net/roks2013_shawe_taylor_kernels/">John Shawe-Taylor, Centre for Computational Statistics and Machine Learning, University College London</a></p>
+</div><div class='wrapped_block'><h2>INFO</h2>
+<p>E-mail:<br />
+<a href="mailto:info@videolectures.net">info@videolectures.net</a></p>
+<p>Phone:<br />
++386 1 477 31 48</p>
+<table><tr><td><a href="http://www.facebook.com/pages/Ljubljana-Slovenia/VideoLecturesNET/181913865931?v=info#!/pages/Ljubljana-Slovenia/VideoLecturesNET/181913865931?v=wall/"><img alt="Facebook" title="Facebook" src="/site/media/custom/facebook.png" /></a></td><td><a href="http://twitter.com/videolectures/"><img alt="Twitter" title="Twitter" src="/site/media/custom/twitter.png" /></a></td><td><a href="http://blog.videolectures.net/"><img alt="Blog" title="Blog" src="/site/media/custom/blog.png" /></a></td><td><a href="/site/rss/"><img alt="RSS Feed" title="RSS Feed" src="/site/media/custom/rss.png" /></a></td><td><a href="http://www.linkedin.com/groups/VideoLectures-4139916"><img alt="LinkedIn" title="LinkedIn" src="/site/media/custom/linkedin.png" /></a></td><td><a href="https://plus.google.com/105894483657660300259"><img alt="Google+" title="Google+" src="/site/media/custom/google-plus.png" /></a></td></tr>
+</table>
+</div></div>
+        
+      
+    
+    <div style='float:right; margin-top:25px; margin-bottom:10px;'>
+      <a href='http://www.k4all.org/' style='display:block; float:right; margin-left:10px;'><img src="http://media.videolectures.net/rel.1382446514//custom/logoK4A.png"/></a>
+      <a href='http://www.ijs.si/' style='display:block; float:right; margin-left:10px'><img src="http://media.videolectures.net/rel.1382446514//custom/IJS_logo.png" style='margin-left:-6px;'/></a>
+      <a href='http://ailab.ijs.si/' style='display:block; float:right; margin-left:10px;'><img src="http://media.videolectures.net/rel.1382446514//custom/AiLabIcon.png"/></a>
+      <a class='powered_by' href='https://www.viidea.com/'>Powered by</a>
+      <br style='clear:right;' />
+    </div>
+    <div id="cc"> 
+      <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/">
+        <img src="http://media.videolectures.net/rel.1382446514//custom/cc.png" width="88" height="31" hspace="5" vspace="5" align="absmiddle" />
+      </a>
+      Copyright &copy; 2013 VideoLectures.Net<br>
+      Unless otherwise noted, all content is released under the<br>
+      Creative Commons Attribution-Noncommercial-No Derivative Works 3.0
+    </div>
+    </div>
+  </div>
+  
+
+
+
+
+
+
+<script src="http://media.videolectures.net/rel.1382446514//classic/script.js"></script>
+<div id="cinema_shadow"></div> 
+
+
+
+
+<script src="http://media.videolectures.net/rel.1382446514/static/vl/js/ga.min.js"></script>
+<script>
+  (function () {
+    var track_user, log_url = '/lecture/eu_supported/pascal/icml09_montreal/icml09_tutorials/icml09_leskovec_msain/'||undefined,
+    
+      track_user = 'anon';
+    
+
+    
+    viipg.ga.initialize({
+      channels: {
+        viidea: null
+        
+        
+          
+            ,site: 'ga:UA-353712-6'
+          
+        
+      },
+      dimensions: {
+        1: track_user
+      },
+      variables: {
+        User: [1, track_user, 1]
+      },
+      sid: 'f8d30d67e0bd6e6107713327d7a4b0301ff1607d'
+    });
+    
+    viipg.ga('site.send', 'pageview', log_url);
+  }());
+</script>
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+(function (){ // @TODO this needs to be after _google_analytics.html
+  // track project specifiv account
+  var alt_analytics_trackers = {
+    "mit_ocw": "UA-353712-10",
+    "mit_world": "UA-353712-11",
+    "yale_oyc": "UA-353712-15",
+    "cern": "UA-353712-16",
+    "pascal": "UA-353712-17",
+    "k4a": "UA-353712-19",
+    "planetdata": "UA-353712-20"
+  };
+  var tracker_id = alt_analytics_trackers["pascal"];
+  if (tracker_id) {
+    viipg.ga.add_channel('project', tracker_id);
+    viipg.ga('project.send', 'pageview', '/lecture/eu_supported/pascal/icml09_montreal/icml09_tutorials/icml09_leskovec_msain/');
+  }
+}());
+</script>
+
+
+
+
+
+<script type="text/javascript" defer="defer">
+$(window).load(function() {
+  $.ajax({
+      url: "http://log2.quintelligence.com/qlog.js", type: 'get', dataType: 'script', cache: true,
+      success: function() { setTimeout(function() {quintTracker(3);},100); }
+  });
+});
+</script>
+
+
+<!-- LiveNetLife BEGIN -->
+<script type='text/javascript'>
+$(window).load( function() {
+(function () {var lnl = document.createElement('script');lnl.type = 'text/javascript';lnl.async = true;lnl.src = 'http://bin.livenetlife.com/?CodeId=6c8847e6-d31f-6914-78b2-605053acbf82';lnl.id='LiveNetLife';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(lnl, s);})();
+});
+</script>
+<!-- LiveNetLife END -->
+
+ 
+
+
+
+
+    
+
+
+
+</body>
+
+</html>

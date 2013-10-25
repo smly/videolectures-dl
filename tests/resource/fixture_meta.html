@@ -1,0 +1,785 @@
+<?xml version="1.0" standalone="yes"?>
+<smil>
+<head>
+  <meta name="title" content="Modeling Social and Information Networks: Opportunities for Machine Learning" />
+  <meta name="abstract" content="Emergence of the web, social media and online social networking websites gave rise to detailed traces of human social activity. This offers many opportunities to analyze and model behaviors of millions of people. For example, we can now study &#39;&#39;planetary scale&#39;&#39; dynamics of a full Microsoft Instant Messenger network of 240 million people, with more than 255 billion exchanged messages per month. 
+Many types of data, especially web and &quot;social&quot; data, come in a form of a network or a graph. This tutorial will cover several aspects of such network data: macroscopic properties of network data sets; statistical models for modeling large scale network structure of static and dynamic networks; properties and models of network structure and evolution at the level of groups of nodes and algorithms for extracting such structures. I will also present several applications and case studies of blogs, instant messaging, Wikipedia and web search. 
+Machine learning as a topic will be present throughout the tutorial. The idea of the tutorial is to introduce the machine learning community to recent developments in the area of social and information networks that underpin the Web and other on-line media." />
+  <meta name="part" content="1" />
+  <meta name="date" content="June 14, 2009" />
+  <meta name="type" content="Tutorial" />
+  <layout>
+    
+      <region id="slides" size="medium" float="right" />
+    
+  </layout>
+  
+</head>
+<body>
+  <switch region="video" dur="2:21:27" type="v">
+    
+	  
+		  
+			<video id="47445" proto="mms" width="352" height="288" systemBitrate="1208082" size="1312460110" apptype="v" ext="wmv" type="video/wmv"  src="mms://oxy.videolectures.net/v003/a8/vdgopztwxkz4vumr5wctgjqwpm7dchs5.wmv"/>
+		  
+			<video id="47445" proto="http" width="352" height="288" systemBitrate="1208082" size="1312460110" apptype="v" ext="wmv" type="video/wmv"  src="http://hydro.ijs.si/v005/a8/vdgopztwxkz4vumr5wctgjqwpm7dchs5.wmv"/>
+		  
+	  
+    
+	  
+		  
+			<video id="47446" proto="rtmp" width="352" height="288" systemBitrate="403520" size="438383587" apptype="v" ext="flv" type="video/flv"  streamer="rtmp://hydro2.videolectures.net/vod" src="flv:v005/a8/vctm755bsql5ualqwsqxvpcsdfbes3bt.flv"/>
+		  
+			<video id="47446" proto="m3u8" width="352" height="288" systemBitrate="403520" size="438383587" apptype="v" ext="flv" type="application/x-mpegURL"  src="http://hydro2.videolectures.net/vod/_definst_/flv:v005/a8/vctm755bsql5ualqwsqxvpcsdfbes3bt.flv/playlist.m3u8"/>
+		  
+			<video id="47446" proto="http" width="352" height="288" systemBitrate="403520" size="438383587" apptype="v" ext="flv" type="video/flv"  src="http://hydro.ijs.si/v005/a8/vctm755bsql5ualqwsqxvpcsdfbes3bt.flv"/>
+		  
+	  
+    
+    
+	  <image src="http://hydro.ijs.si/v005/ee/537okpvtrdfq7oujci65ysepob2vqjia.jpg" type="screenshot"/>
+      <image src="http://hydro.ijs.si/v005/19/dgqtpq7tlvahuqcpxtaqzwd3wfcf433z.jpg" type="thumbnail"/>
+	
+  </switch>
+  
+  <seq region="slides">
+  
+    <switch begin="0.000" title="Modeling Large Social &amp; Information Networks" id="s120367" sid="i119859" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_001.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_001.jpg" />
+    </switch>
+    <switch begin="26.231" title="About the tutorial" id="s120698" sid="i119860" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_002.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_002.jpg" />
+    </switch>
+    <switch begin="56.687" title="Networks: rich data" id="s120699" sid="i119861" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_003.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_003.jpg" />
+    </switch>
+    <switch begin="117.101" title="Why networks?" id="s120700" sid="i119862" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_004.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_004.jpg" />
+    </switch>
+    <switch begin="238.795" title="Networks of the Real-world (1)" id="s120701" sid="i119863" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_005.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_005.jpg" />
+    </switch>
+    <switch begin="361.250" title="Networks of the Real-world (2)" id="s120702" sid="i119864" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_006.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_006.jpg" />
+    </switch>
+    <switch begin="408.649" title="Networks as Phenomena" id="s120703" sid="i119865" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_007.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_007.jpg" />
+    </switch>
+    <switch begin="448.822" title="Models and Laws of Networks" id="s120704" sid="i119866" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_008.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_008.jpg" />
+    </switch>
+    <switch begin="501.308" title="Mining Social Network Data" id="s120705" sid="i119867" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_009.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_009.jpg" />
+    </switch>
+    <switch begin="603.418" title="Networks: Rich Social Data" id="s120706" sid="i119868" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_010.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_010.jpg" />
+    </switch>
+    <switch begin="656.184" title="Networks: A Matter of Scale" id="s120707" sid="i119869" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_011.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_011.jpg" />
+    </switch>
+    <switch begin="701.653" title="Networks: Scale Matters" id="s120708" sid="i119870" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_012.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_012.jpg" />
+    </switch>
+    <switch begin="773.710" title="Networks: Structure &amp; Process" id="s120709" sid="i119871" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_013.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_013.jpg" />
+    </switch>
+    <switch begin="825.077" title="Tutorial outline" id="s120710" sid="i119872" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_014.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_014.jpg" />
+    </switch>
+    <switch begin="901.465" title="Modeling global network structure" id="s120713" sid="i119873" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_015.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_015.jpg" />
+    </switch>
+    <switch begin="905.161" title="Motivation" id="s120714" sid="i119874" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_016.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_016.jpg" />
+    </switch>
+    <switch begin="908.460" title="Random graph model" id="s120715" sid="i119875" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_017.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_017.jpg" />
+    </switch>
+    <switch begin="968.855" title="Properties of random graphs" id="s120716" sid="i119876" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_018.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_018.jpg" />
+    </switch>
+    <switch begin="1195.052" title="Degrees in real networks (1)" id="s120717" sid="i119877" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_019.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_019.jpg" />
+    </switch>
+    <switch begin="1244.408" title="Degrees in real networks (2)" id="s120718" sid="i119878" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_020.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_020.jpg" />
+    </switch>
+    <switch begin="1300.355" title="Degrees in real networks (3)" id="s120719" sid="i119879" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_021.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_021.jpg" />
+    </switch>
+    <switch begin="1465.254" title="The long tail" id="s120720" sid="i119880" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_022.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_022.jpg" />
+    </switch>
+    <switch begin="1609.796" title="Power law degree exponents" id="s120721" sid="i119881" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_023.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_023.jpg" />
+    </switch>
+    <switch begin="1671.031" title="Estimating alpha" id="s120722" sid="i119882" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_024.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_024.jpg" />
+    </switch>
+    <switch begin="1812.985" title="Flickr: Power-law degree exponent" id="s120723" sid="i119883" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_025.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_025.jpg" />
+    </switch>
+    <switch begin="1909.930" title="Poisson vs. Scale-free networks" id="s120724" sid="i119884" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_026.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_026.jpg" />
+    </switch>
+    <switch begin="1957.036" title="Model: Preferential attachment" id="s120725" sid="i119885" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_027.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_027.jpg" />
+    </switch>
+    <switch begin="2080.961" title="Many extensions and variations" id="s120726" sid="i119886" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_028.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_028.jpg" />
+    </switch>
+    <switch begin="2169.853" title="Does Preferential attachment hold? (1)" id="s120728" sid="i119887" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_029.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_029.jpg" />
+    </switch>
+    <switch begin="2208.923" title="Does Preferential attachment hold? (2)" id="s120729" sid="i119888" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_030.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_030.jpg" />
+    </switch>
+    <switch begin="2308.477" title="Consequence 1: network resilience" id="s120730" sid="i119889" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_031.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_031.jpg" />
+    </switch>
+    <switch begin="2416.908" title="Consequence 2: Web search" id="s120731" sid="i119890" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_032.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_032.jpg" />
+    </switch>
+    <switch begin="2470.477" title="Properties of social networks" id="s120732" sid="i119891" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_033.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_033.jpg" />
+    </switch>
+    <switch begin="2541.079" title="World social network" id="s120733" sid="i119892" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_034.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_034.jpg" />
+    </switch>
+    <switch begin="2581.816" title="Small world of messaging (1)" id="s120734" sid="i119893" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_035.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_035.jpg" />
+    </switch>
+    <switch begin="2643.633" title="Small world of messaging (2)" id="s120735" sid="i119894" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_036.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_036.jpg" />
+    </switch>
+    <switch begin="2653.342" title="Edge locality in networks" id="s120736" sid="i119895" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_037.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_037.jpg" />
+    </switch>
+    <switch begin="2834.887" title="Small-world model (1)" id="s120739" sid="i119896" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_038.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_038.jpg" />
+    </switch>
+    <switch begin="2860.535" title="Small-world model (2)" id="s120740" sid="i119897" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_039.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_039.jpg" />
+    </switch>
+    <switch begin="2911.920" title="Clustering and diameter in a Small-world model" id="s120741" sid="i119898" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_040.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_040.jpg" />
+    </switch>
+    <switch begin="3002.682" title="Consequence: Navigation (1)" id="s120742" sid="i119899" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_041.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_041.jpg" />
+    </switch>
+    <switch begin="3074.311" title="Consequence: Navigation (2)" id="s120743" sid="i119900" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_042.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_042.jpg" />
+    </switch>
+    <switch begin="3135.282" title="Consequence: Navigation (3)" id="s120744" sid="i119901" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_043.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_043.jpg" />
+    </switch>
+    <switch begin="3251.846" title="Network evolution (1)" id="s120745" sid="i119902" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_044.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_044.jpg" />
+    </switch>
+    <switch begin="3339.712" title="Network evolution (2)" id="s120746" sid="i119903" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_045.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_045.jpg" />
+    </switch>
+    <switch begin="3431.114" title="Diameter of a densifying G" id="s120747" sid="i119904" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_046.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_046.jpg" />
+    </switch>
+    <switch begin="3470.867" title="Diameter of a rewired network" id="s120748" sid="i119905" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_047.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_047.jpg" />
+    </switch>
+    <switch begin="3534.652" title="Modeling densification &amp; diameter" id="s120749" sid="i119906" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_048.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_048.jpg" />
+    </switch>
+    <switch begin="3638.703" title="Generating realistic graphs" id="s120750" sid="i119907" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_049.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_049.jpg" />
+    </switch>
+    <switch begin="3719.639" title="Kronecker product: Definition" id="s120751" sid="i119908" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_050.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_050.jpg" />
+    </switch>
+    <switch begin="3778.782" title="Kronecker graphs (1)" id="s120752" sid="i119909" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_051.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_051.jpg" />
+    </switch>
+    <switch begin="3828.180" title="Kronecker graphs (2)" id="s120753" sid="i119910" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_052.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_052.jpg" />
+    </switch>
+    <switch begin="3949.161" title="Kronecker initiator matrices" id="s120754" sid="i119911" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_053.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_053.jpg" />
+    </switch>
+    <switch begin="3987.788" title="Kronecker graphs: Interpretation" id="s120755" sid="i119912" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_054.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_054.jpg" />
+    </switch>
+    <switch begin="4155.164" title="Estimating Kronecker graphs" id="s120756" sid="i119913" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_055.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_055.jpg" />
+    </switch>
+    <switch begin="4285.943" title="Kronecker graphs: Estimation" id="s120757" sid="i119914" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_056.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_056.jpg" />
+    </switch>
+    <switch begin="4289.718" title="Estimation: Epinions" id="s120758" sid="i119915" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_057.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_057.jpg" />
+    </switch>
+    <switch begin="4360.750" title="Kronecker: Consequences" id="s120759" sid="i119916" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_058.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_058.jpg" />
+    </switch>
+    <switch begin="4408.277" title="Modeling local network structure (links)" id="s120760" sid="i119917" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_059.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_059.jpg" />
+    </switch>
+    <switch begin="4434.994" title="Link prediction in networks" id="s120761" sid="i119918" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_060.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_060.jpg" />
+    </switch>
+    <switch begin="4457.275" title="Link prediction via node distance (1)" id="s120762" sid="i119919" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_061.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_061.jpg" />
+    </switch>
+    <switch begin="4493.459" title="Link prediction via node distance (2)" id="s120763" sid="i119920" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_062.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_062.jpg" />
+    </switch>
+    <switch begin="4519.891" title="Link prediction via node distance (3)" id="s120764" sid="i119921" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_063.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_063.jpg" />
+    </switch>
+    <switch begin="4588.988" title="Link prediction via node distance (4)" id="s120765" sid="i119922" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_064.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_064.jpg" />
+    </switch>
+    <switch begin="4713.288" title="Hierarchical random graphs" id="s120766" sid="i119923" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_065.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_065.jpg" />
+    </switch>
+    <switch begin="4783.040" title="HRG: More examples" id="s120767" sid="i119924" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_066.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_066.jpg" />
+    </switch>
+    <switch begin="4825.618" title="HRG: Model estimation (1)" id="s120768" sid="i119925" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_067.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_067.jpg" />
+    </switch>
+    <switch begin="4929.138" title="HRG: Model estimation (2)" id="s120769" sid="i119926" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_068.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_068.jpg" />
+    </switch>
+    <switch begin="4987.521" title="HRG: Consensus hierarchies" id="s120771" sid="i119927" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_069.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_069.jpg" />
+    </switch>
+    <switch begin="4989.067" title="HRG: Link prediction (1)" id="s120772" sid="i119928" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_070.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_070.jpg" />
+    </switch>
+    <switch begin="5072.578" title="Exponential random graphs (p*)" id="s120773" sid="i119930" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_072.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_072.jpg" />
+    </switch>
+    <switch begin="5105.947" title="p*: Definition" id="s120774" sid="i119931" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_073.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_073.jpg" />
+    </switch>
+    <switch begin="5129.878" title="p*: What kinds of features?" id="s120776" sid="i119932" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_074.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_074.jpg" />
+    </switch>
+    <switch begin="5180.675" title="Example: p1 (earliest ERG model)" id="s120777" sid="i119933" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_075.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_075.jpg" />
+    </switch>
+    <switch begin="5238.760" title="p*: Parameter estimation" id="s120778" sid="i119934" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_076.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_076.jpg" />
+    </switch>
+    <switch begin="5260.576" title="p*: Maximizing likelihood" id="s120779" sid="i119935" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_077.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_077.jpg" />
+    </switch>
+    <switch begin="5264.411" title="p*: Example" id="s120780" sid="i119937" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_079.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_079.jpg" />
+    </switch>
+    <switch begin="5368.701" title="p*: Issues" id="s120781" sid="i119938" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_080.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_080.jpg" />
+    </switch>
+    <switch begin="5410.773" title="Statistical Relational Learning" id="s120782" sid="i119939" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_081.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_081.jpg" />
+    </switch>
+    <switch begin="5480.483" title="Network structure at the level of groups of nodes" id="s120783" sid="i119946" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_088.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_088.jpg" />
+    </switch>
+    <switch begin="5500.312" title="Group formation in networks" id="s120784" sid="i119947" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_089.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_089.jpg" />
+    </switch>
+    <switch begin="5612.521" title="Group growth as diffusion" id="s120785" sid="i119948" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_090.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_090.jpg" />
+    </switch>
+    <switch begin="5661.774" title="P(join) vs. # friends in the group" id="s120786" sid="i119949" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_091.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_091.jpg" />
+    </switch>
+    <switch begin="5733.063" title="Groups: More subtle features" id="s120787" sid="i119950" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_092.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_092.jpg" />
+    </switch>
+    <switch begin="5761.075" title="Connectedness of Friends (1)" id="s120788" sid="i119951" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_093.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_093.jpg" />
+    </switch>
+    <switch begin="5835.735" title="Connectedness of Friends (2)" id="s120789" sid="i119952" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_094.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_094.jpg" />
+    </switch>
+    <switch begin="5877.614" title="Connectedness of Friends (1)" id="s120790" sid="i119951" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_093.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_093.jpg" />
+    </switch>
+    <switch begin="5885.910" title="Connectedness of Friends (2)" id="s120791" sid="i119952" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_094.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_094.jpg" />
+    </switch>
+    <switch begin="5890.463" title="Predicting group growth" id="s120792" sid="i119954" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_096.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_096.jpg" />
+    </switch>
+    <switch begin="5937.890" title="Network communities" id="s120793" sid="i119955" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_097.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_097.jpg" />
+    </switch>
+    <switch begin="5992.042" title="Finding network communities" id="s120794" sid="i119956" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_098.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_098.jpg" />
+    </switch>
+    <switch begin="6018.291" title="Network communities" id="s120795" sid="i119955" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_097.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_097.jpg" />
+    </switch>
+    <switch begin="6027.705" title="Finding network communities" id="s120796" sid="i119956" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_098.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_098.jpg" />
+    </switch>
+    <switch begin="6028.851" title="Social Network Data" id="s120797" sid="i119957" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_099.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_099.jpg" />
+    </switch>
+    <switch begin="6061.140" title="Micro-markets in sponsored search" id="s120798" sid="i119958" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_100.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_100.jpg" />
+    </switch>
+    <switch begin="6106.001" title="Clustering and Community Finding" id="s120799" sid="i119959" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_101.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_101.jpg" />
+    </switch>
+    <switch begin="6159.444" title="Hierarchically nested communities" id="s120800" sid="i119960" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_102.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_102.jpg" />
+    </switch>
+    <switch begin="6197.159" title="Algorithm of Girvan-Newman (1)" id="s120801" sid="i119961" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_103.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_103.jpg" />
+    </switch>
+    <switch begin="6278.095" title="Algorithm of Girvan-Newman (2)" id="s120802" sid="i119962" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_104.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_104.jpg" />
+    </switch>
+    <switch begin="6301.289" title="Girvan-Newman: Results (1)" id="s120803" sid="i119963" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_105.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_105.jpg" />
+    </switch>
+    <switch begin="6347.603" title="Girvan-Newman: Results (2)" id="s120804" sid="i119964" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_106.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_106.jpg" />
+    </switch>
+    <switch begin="6371.570" title="How to compute betweenness (1)" id="s120805" sid="i119965" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_107.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_107.jpg" />
+    </switch>
+    <switch begin="6405.427" title="How to compute betweenness (2)" id="s120806" sid="i119966" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_108.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_108.jpg" />
+    </switch>
+    <switch begin="6447.003" title="How to compute betweenness (3)" id="s120808" sid="i119967" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_109.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_109.jpg" />
+    </switch>
+    <switch begin="6572.930" title="Girvan-Newman: Results (1)" id="s120810" sid="i119963" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_105.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_105.jpg" />
+    </switch>
+    <switch begin="6586.045" title="Hierarchical random graphs" id="s120811" sid="i119968" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_110.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_110.jpg" />
+    </switch>
+    <switch begin="6658.129" title="Network communities" id="s120812" sid="i119969" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_111.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_111.jpg" />
+    </switch>
+    <switch begin="6685.630" title="Small vs. Large networks" id="s120813" sid="i119970" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_112.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_112.jpg" />
+    </switch>
+    <switch begin="6723.280" title="How expressed are communities?" id="s120814" sid="i119971" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_113.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_113.jpg" />
+    </switch>
+    <switch begin="6850.749" title="Community score (quality) (1)" id="s120815" sid="i119972" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_114.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_114.jpg" />
+    </switch>
+    <switch begin="6860.968" title="Community score (quality) (2)" id="s120816" sid="i119973" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_115.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_115.jpg" />
+    </switch>
+    <switch begin="6868.969" title="Community score (quality) (3)" id="s120817" sid="i119974" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_116.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_116.jpg" />
+    </switch>
+    <switch begin="6877.058" title="Community score (quality) (4)" id="s120818" sid="i119975" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_117.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_117.jpg" />
+    </switch>
+    <switch begin="6889.453" title="Network Community Profile Plot (1)" id="s120819" sid="i119976" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_118.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_118.jpg" />
+    </switch>
+    <switch begin="6946.261" title="Network Community Profile Plot (2)" id="s120820" sid="i119977" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_119.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_119.jpg" />
+    </switch>
+    <switch begin="7002.451" title="Probing networks" id="s120821" sid="i119978" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_120.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_120.jpg" />
+    </switch>
+    <switch begin="7022.615" title="Network Community Profile Plot (2)" id="s120822" sid="i119977" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_119.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_119.jpg" />
+    </switch>
+    <switch begin="7024.912" title="Probing networks" id="s120823" sid="i119978" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_120.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_120.jpg" />
+    </switch>
+    <switch begin="7062.009" title="NCP plot: Meshes" id="s120824" sid="i119979" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_121.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_121.jpg" />
+    </switch>
+    <switch begin="7164.792" title="NCP plot: Manifold dataset" id="s120825" sid="i119980" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_122.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_122.jpg" />
+    </switch>
+    <switch begin="7200.663" title="NCP plot: Zachary&#39;s karate club" id="s120827" sid="i119981" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_123.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_123.jpg" />
+    </switch>
+    <switch begin="7204.178" title="NCP plot: Network Science" id="s120828" sid="i119982" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_124.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_124.jpg" />
+    </switch>
+    <switch begin="7269.217" title="NCP plot: Hierarchical networks" id="s120829" sid="i119983" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_125.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_125.jpg" />
+    </switch>
+    <switch begin="7317.215" title="Natural hypothesis" id="s120830" sid="i119984" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_126.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_126.jpg" />
+    </switch>
+    <switch begin="7346.881" title="Large networks: Very different" id="s120831" sid="i119985" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_127.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_127.jpg" />
+    </switch>
+    <switch begin="7381.479" title="More NCP plots of networks" id="s120832" sid="i119986" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_128.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_128.jpg" />
+    </switch>
+    <switch begin="7411.542" title="NCP: LiveJournal" id="s120833" sid="i119987" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_129.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_129.jpg" />
+    </switch>
+    <switch begin="7449.386" title="Explanation: Upward part" id="s120834" sid="i119988" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_130.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_130.jpg" />
+    </switch>
+    <switch begin="7511.934" title="Explanation: Downward part" id="s120835" sid="i119989" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_131.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_131.jpg" />
+    </switch>
+    <switch begin="7564.786" title="Community size is constant" id="s120836" sid="i119990" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_132.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_132.jpg" />
+    </switch>
+    <switch begin="7640.326" title="What if we remove whiskers? (1)" id="s120837" sid="i119993" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_135.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_135.jpg" />
+    </switch>
+    <switch begin="7696.906" title="What if we remove whiskers? (2)" id="s120838" sid="i119994" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_136.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_136.jpg" />
+    </switch>
+    <switch begin="7705.280" title="Suggested network structure" id="s120839" sid="i119995" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_137.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_137.jpg" />
+    </switch>
+    <switch begin="7772.031" title="Caveat: How do we cut?" id="s120840" sid="i119996" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_138.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_138.jpg" />
+    </switch>
+    <switch begin="7774.475" title="NCP: Complete picture" id="s120841" sid="i119997" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_139.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_139.jpg" />
+    </switch>
+    <switch begin="7777.749" title="Kronecker &amp; Network structure (1)" id="s120842" sid="i120003" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_145.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_145.jpg" />
+    </switch>
+    <switch begin="7848.281" title="Kronecker &amp; Network structure (2)" id="s120843" sid="i120004" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_146.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_146.jpg" />
+    </switch>
+    <switch begin="7942.638" title="Small vs. Large networks" id="s120844" sid="i120005" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_147.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_147.jpg" />
+    </switch>
+    <switch begin="7990.404" title="Cluster structure of large networks" id="s120845" sid="i120006" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_148.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_148.jpg" />
+    </switch>
+    <switch begin="8040.574" title="Comparison with &quot;Ground truth&quot; (1)" id="s120846" sid="i120007" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_149.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_149.jpg" />
+    </switch>
+    <switch begin="8136.314" title="Comparison with &quot;Ground truth&quot; (2)" id="s120847" sid="i120008" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_150.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_150.jpg" />
+    </switch>
+    <switch begin="8225.578" title="Community structure: Conclusion" id="s120848" sid="i120009" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_151.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_151.jpg" />
+    </switch>
+    <switch begin="8268.296" title="Community structure: Implications" id="s120849" sid="i120010" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_152.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_152.jpg" />
+    </switch>
+    <switch begin="8332.210" title="The end: Conclusion" id="s120850" sid="i120011" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_153.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_153.jpg" />
+    </switch>
+    <switch begin="8354.129" title="The end: Reflections (1)" id="s120851" sid="i120012" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_154.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_154.jpg" />
+    </switch>
+    <switch begin="8369.837" title="The end: Reflections (2)" id="s120852" sid="i120013" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_155.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_155.jpg" />
+    </switch>
+    <switch begin="8416.017" title="The end: Reflections (3)" id="s120853" sid="i120014" listed="1">
+      
+        <image width="480" height="360" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_156.480.jpg" />
+        <image width="3000" height="2250" src="http://hydro.ijs.si/2009/pascal2/icml09_montreal/leskovec_msain/icml09_leskovec_msain_01.zip.slides/icml09_leskovec_msain_01_Page_156.jpg" />
+    </switch>
+  </seq>
+  
+</body>
+</smil>

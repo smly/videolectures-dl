@@ -69,7 +69,7 @@ class VideoInfoExtractor:
             self._extracted = False
         else:
             self._extracted = True
-            self._server    = "rtmp://oxy.videolectures.net/video/"
+            self._server    = "rtmp://hydro2.videolectures.net/vod/"
             self._filepath  = matches.group(1)
         return self._filepath
 
@@ -89,8 +89,6 @@ class DownloadError(Exception):
     pass
 
 class VideoDownloader:
-    PLAYER_URL      = 'http://media.videolectures.net/jw-player/player.swf'
-    PLAYER_CHECKSUM = 'e2436d6201f4265a0a0ad974165a3b26a6f302ba8e7cfebd6dfad2cac28105e1'
 
     def __init__(self, opts):
         self.init = 0
@@ -120,7 +118,7 @@ class VideoDownloader:
     def report_download_file(self, filename):
         self.to_stdout("[download] Destination: %s" % filename)
 
-    def download_with_rtmp(self, filename, server, url):
+    def download_with_rtmp(self, filename, server, appname, url):
         self.report_download_file(filename)
         try:
             stdout = open(os.path.devnull, 'w')
@@ -130,8 +128,7 @@ class VideoDownloader:
         finally:
             stdout.close()
 
-        basic_args = ['rtmpdump', '-q', '-r', server, '-y', url, '-a', 'video'] + \
-            ['-s', self.PLAYER_URL, '-w', self.PLAYER_CHECKSUM, '-o', filename]
+        basic_args = ['rtmpdump', '-q', '-r', server, '-y', url, '-a', appname, '-o', filename]
         retval = subprocess.Popen(basic_args)
 
         while True:
@@ -154,11 +151,18 @@ class VideoDownloader:
         if not self.ie.get_info(url):
             self.ie_error('ERROR: no video information is extracted.')
 
+        print("self.ie._server:", self.ie._server)
+        print("self.ie._filepath:", self.ie._filepath)
+
         if self.opts.usetitle or self.opts.useliteral:
             filename = "%s.flv" % self.ie._meta_title_name
         else:
             filename = "%s.flv" % self.ie._meta_url_name
-        if self.download_with_rtmp(filename, self.ie._server, self.ie._filepath):
+
+        self.ie._appname = self.ie._server.split('/')[-2]
+        print(self.ie._appname)
+
+        if self.download_with_rtmp(filename, self.ie._server, self.ie._appname, self.ie._filepath):
             self.report("download complete")
 
 def get_args():

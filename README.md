@@ -1,6 +1,6 @@
 # videolectures-dl
 
-[(This is the source code branch, if you are looking for a compiled windows binary, click here.)][1]
+[![Build Status](https://api.travis-ci.org/smly/videolectures-dl.png?branch=master)](https://travis-ci.org/smly/videolectures-dl)
 
 A small command-line program to download videos from videolectures.net.
 This program works under both python2 and python3.
@@ -9,9 +9,11 @@ This program works under both python2 and python3.
 
 * [rtmpdump][2]
 * python2 or python3
+* [requests][3]
 
   [1]: https://github.com/smly/videolectures-dl/tree/binary "videolectures-dl @ GitHub"
   [2]: http://rtmpdump.mplayerhq.hu/ "RTMPDump"
+  [3]: https://pypi.python.org/pypi/requests "requests"
 
 ## Usage
 
@@ -22,10 +24,8 @@ This program works under both python2 and python3.
       -v, --version    print program version and exit
       -w, --overwrite  overwrite an existent file
       -t, --title      use title in filename
-      -l, --literal    use literal title in filename
 
 ## What doesn't work?
 
 * error handling
-* try resuming
-* messy code
+* resuming
