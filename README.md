@@ -13,8 +13,15 @@ A small command-line program to download videos from videolectures.net.
   [2]: http://rtmpdump.mplayerhq.hu/ "RTMPDump"
   [3]: https://pypi.python.org/pypi/requests "requests"
 
+## Installation
+
+    $ git clone http://github.com/smly/videolectures-dl
+    $ cd videolectures-dl
+    $ python setup.py install
+
 ## Usage
 
+    $ videolectures-dl --help
     Usage: videolectures-dl [options] video_url
     
     Options:

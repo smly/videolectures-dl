@@ -31,10 +31,10 @@ def parse_args():
         version=__version__,
         help='print program version and exit')
     p.add_argument(
-        '-w', '--overwrite', action='store_true',
+        '-w', '--overwrite', action='store_true', default=False,
         help='overwrite an existent file')
     p.add_argument(
-        '-t', '--title', action='store_true',
+        '-t', '--title', action='store_true', default=False,
         help='use title as a filename')
     p.add_argument(
         '-o', '--output', type=str, default=None,
@@ -50,6 +50,9 @@ def parse_args():
 
 
 def main():
+    """
+    Entrypoint
+    """
     arguments = parse_args()
     download = VideoDownloader(arguments)
     download.run(arguments.output, arguments.video_url)

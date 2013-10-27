@@ -75,7 +75,7 @@ class VideoDownloader(object):
         """
         Print a message to stderr
         """
-        print >> sys.stderr, message
+        sys.stderr.write(message)
 
     def _to_stdout(self, message, skip_eol=False):
         """
@@ -83,6 +83,16 @@ class VideoDownloader(object):
         """
         sys.stdout.write(("{0}{1}".format(message, ["\n", ""][skip_eol])))
         sys.stdout.flush()
+
+    def show_video_detail(self, filename, metadata):
+        """
+        Show video detail
+        """
+        print("File name: {0}".format(filename))
+        print("Title: {0}".format(metadata['meta_title']))
+        print("Date: {0}".format(metadata['meta_date']))
+        print("Type: {0}".format(metadata['meta_type']))
+        print("Part: {0}".format(metadata['meta_part']))
 
     def error(self, err, message=None):
         """
@@ -108,7 +118,7 @@ class VideoDownloader(object):
 
         # Set filename
         if filename is None:
-            if self.opts.title is True:
+            if self.opts.title is False:
                 name = video_info['default_filename']
             else:
                 name = meta_data['meta_title']
@@ -116,6 +126,9 @@ class VideoDownloader(object):
             filename = "{0}.{1}".format(
                 name,
                 meta_data['ext'])
+
+        # Show video details
+        self.show_video_detail(filename, meta_data)
 
         # Dump video
         if self.dump_video(filename, meta_data):
@@ -197,7 +210,7 @@ class VideoInfoExtractor(object):
         """
         Print a message to stderr
         """
-        print >> sys.stderr, message
+        sys.stderr.write(message)
 
     def error(self, err, message=None):
         """
@@ -220,7 +233,6 @@ class VideoInfoExtractor(object):
         body = view_resp.text.encode('utf8', 'ignore').decode('utf8')
 
         info = self.extract_info(body)
-        info.update(self.extract_metadata(body))
         info.update(self.extract_streaming_path(body))
         return info
 
@@ -234,6 +246,7 @@ class VideoInfoExtractor(object):
         meta_resp = requests.get(meta_url)
         meta_body = meta_resp.text.encode('utf8', 'ignore').decode('utf8')
         meta = self.extract_streaming_source(meta_body)
+        meta.update(self.extract_metadata(meta_body))
         return meta
 
     def extract_streaming_path(self, body):
