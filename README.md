@@ -38,8 +38,3 @@ A small command-line program to download videos from videolectures.net.
     Part: 1
     [rtmpdump] 13.42 MB
 
-## What doesn't work?
-
-* Resuming
-
-Of course, I welcome pull requests with fixes and improvements to my code :)

@@ -39,6 +39,9 @@ def parse_args():
     p.add_argument(
         '-o', '--output', type=str, default=None,
         help='video filename')
+    p.add_argument(
+        '-e', '--resume', action='store_true', default=False,
+        help='resume an incomplete RTMP download')
     p.add_argument('video_url', help='url of video page')
 
     args = p.parse_args()

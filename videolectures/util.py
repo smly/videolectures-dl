@@ -139,9 +139,9 @@ class VideoDownloader(object):
         Dump a video from videolectures.net
         """
         if os.path.exists(filename):
-            if self.opts.overwrite:
+            if self.opts.overwrite is True and self.opts.resume is False:
                 os.remove(filename)
-            else:
+            elif self.opts.overwrite is False and self.opts.resume is False:
                 self.error(DownloadError,
                            ("ERROR: file already exists. " +
                             "remove it or use `overwrite`"))
@@ -163,6 +163,9 @@ class VideoDownloader(object):
             '-y', meta_data['source'],
             '-a', 'vod', '-o', filename,
         ]
+        if self.opts.resume is True:
+            basic_args.append('-e')
+
         retval = subprocess.Popen(basic_args)
 
         while True:
