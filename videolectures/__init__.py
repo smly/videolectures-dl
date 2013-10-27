@@ -7,4 +7,4 @@
 init for videolectures
 """
 
-__version__ = '2013.10.27'
+__version__ = '2013.10.28'
