@@ -44,7 +44,7 @@ def _convert_display_size(size):
         return "{:.1f} KB".format(
             size / unit_kilobyte)
 
-    return "{} bytes".format(size)
+    return "{0} bytes".format(size)
 
 
 class ExtractionError(Exception):
@@ -81,7 +81,7 @@ class VideoDownloader(object):
         """
         Print a message to stdout
         """
-        sys.stdout.write(("{}{}".format(message, ["\n", ""][skip_eol])))
+        sys.stdout.write(("{0}{1}".format(message, ["\n", ""][skip_eol])))
         sys.stdout.flush()
 
     def error(self, err, message=None):
@@ -113,7 +113,7 @@ class VideoDownloader(object):
             else:
                 name = meta_data['meta_title']
 
-            filename = "{}.{}".format(
+            filename = "{0}.{1}".format(
                 name,
                 meta_data['ext'])
 
@@ -161,7 +161,7 @@ class VideoDownloader(object):
             previous_size = os.path.getsize(filename)
             display_size = _convert_display_size(previous_size)
             self._to_stdout(self._CLEAR_STDOUT, skip_eol=True)
-            self._to_stdout('\r[rtmpdump] {}'.format(
+            self._to_stdout('\r[rtmpdump] {0}'.format(
                 display_size),
                 skip_eol=True)
             time.sleep(2.0)
@@ -170,7 +170,7 @@ class VideoDownloader(object):
             current_size = os.path.getsize(filename)
             display_size = _convert_display_size(current_size)
             self._to_stdout(self._CLEAR_STDOUT, skip_eol=True)
-            self._to_stdout('\r[rtmpdump] {}'.format(
+            self._to_stdout('\r[rtmpdump] {0}'.format(
                 display_size))
             return True
         else:
@@ -245,7 +245,7 @@ class VideoInfoExtractor(object):
             xhr_path = xhr_path_match.group(1)
         else:
             xhr_path = None
-        xhr_url = "http://videolectures.net{}".format(xhr_path)
+        xhr_url = "http://videolectures.net{0}".format(xhr_path)
 
         return {'streaming_meta_path': xhr_url}
 
@@ -253,7 +253,7 @@ class VideoInfoExtractor(object):
         """
         Extract metadata
         """
-        base_pattern = r'<meta name="{}" content="([^"]*)"\s*/>'
+        base_pattern = r'<meta name="{0}" content="([^"]*)"\s*/>'
         meta_title = _regex_match_get(base_pattern.format('title'), meta_body)
         meta_part = _regex_match_get(base_pattern.format('part'), meta_body)
         meta_date = _regex_match_get(base_pattern.format('date'), meta_body)
