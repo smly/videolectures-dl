@@ -29,8 +29,17 @@ A small command-line program to download videos from videolectures.net.
       -v, --version    print program version and exit
       -w, --overwrite  overwrite an existent file
       -t, --title      use title in filename
+    
+    $ videolectures-dl http://videolectures.net/icml09_leskovec_msain
+    File name: icml09_leskovec_msain.flv
+    Title: Modeling Social and Information Networks: Opportunities for Machine Learning
+    Date: June 14, 2009
+    Type: Tutorial
+    Part: 1
+    [rtmpdump] 13.42 MB
 
 ## What doesn't work?
 
-* error handling
-* resuming
+Of course, I welcome pull requests with fixes and improvements to my code :)
+
+* Resuming
