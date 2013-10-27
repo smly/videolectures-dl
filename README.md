@@ -40,6 +40,6 @@ A small command-line program to download videos from videolectures.net.
 
 ## What doesn't work?
 
-Of course, I welcome pull requests with fixes and improvements to my code :)
-
 * Resuming
+
+Of course, I welcome pull requests with fixes and improvements to my code :)
