@@ -3,12 +3,10 @@
 [![Build Status](https://api.travis-ci.org/smly/videolectures-dl.png?branch=master)](https://travis-ci.org/smly/videolectures-dl)
 
 A small command-line program to download videos from videolectures.net.
-This program works under both python2 and python3.
 
 ## Requirements
 
 * [rtmpdump][2]
-* python2 or python3
 * [requests][3]
 
   [1]: https://github.com/smly/videolectures-dl/tree/binary "videolectures-dl @ GitHub"
